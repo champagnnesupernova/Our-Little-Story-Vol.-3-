@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 3rd Mensive ♡</title>
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#f7fbff;font-family:'Poppins',sans-serif;text-align:center;color:#5a5a5a;overflow-x:hidden}
+section{padding:40px 20px}
+.cover{width:min(1100px,95%);border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+h1,h2,h3{font-family:'Allura',cursive;}
+h1{font-size:58px}
+p{max-width:750px;margin:auto;line-height:1.7}
+button{padding:14px 24px;border:none;border-radius:30px;background:#8FAFD8;color:white;cursor:pointer}
+.envelope{font-size:120px;cursor:pointer}
+.cards{display:none}
+.card-slide{display:none}
+.card-slide.active{display:block;animation:fade .8s}
+.card-slide img{max-width:90%;width:360px;border-radius:20px;box-shadow:0 10px 25px rgba(0,0,0,.15)}
+@keyframes fade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+.controls{margin:20px}
+.flower{position:fixed;top:-20px;animation:fall linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh)}}
+.star-section{display:none;min-height:100vh;background:#09111f;color:white;padding:60px 20px}
+.star-section h1,.star-section p{color:white}
+.star{
+ position:fixed;width:2px;height:2px;background:white;border-radius:50%;
+ animation:twinkle 2s infinite alternate;
+}
+@keyframes twinkle{from{opacity:.2}to{opacity:1}}
+</style>
+</head>
+<body>
+
+<section>
+<img src="cover.jpg" class="cover">
+<br><br>
+<button id="playBtn">🎵 Play This Babe</button>
+<p>↓ Scroll Down ↓</p>
+</section>
+
+<section>
+<h1>Hi bebe 🤍</h1>
+<p>
+happy 3rd mensive.<br><br>
+i know three months isn't a very long time, but somehow you've become one of the most important parts of my days. thank you for every conversation, every laugh, every reassurance, and every moment we've shared together.<br><br>thank you for staying, for loving me, and for being important part of my life.<br><br>and i'm sorry if throughout these three moments, i've made mistakes, disappointed you, or been difficult sometimes. i know i'm not perfect, but please know that i've always loved you sincerely, and i'm still learning how to love you better every day.
+</p>
+</section>
+
+<section>
+<h2> Made with love </h2>
+</section>
+
+<section>
+<div class="envelope" onclick="openEnvelope()">💌</div>
+<p>a few things i want you to know <br><br>check this out, bb 🤍</p>
+</section>
+
+<section class="cards" id="cardi" style="display:block;">
+<div class="card-slide active"><img src="cardi.jpg"></div>
+<div class="card-slide"><img src="card1.jpg"></div>
+<div class="card-slide"><img src="card2.jpg"></div>
+<div class="card-slide"><img src="card3.jpg"></div>
+<div class="card-slide"><img src="card4.jpg"></div>
+<div class="card-slide"><img src="card5.jpg"></div>
+
+<div id="counter">1 / 6</div>
+
+<div class="controls">
+<button onclick="prevCard()">previous ♡</button>
+<button onclick="nextCard()">next ♡</button>
+</div>
+</section>
+
+<section class="star-section" id="starSection">
+<h1>I love you 🤍</h1>
+<p id="finalText"></p>
+</section>
+
+<audio id="music"><source src="blessed.mp3" type="audio/mpeg"></audio>
+
+<script>
+const playBtn=document.getElementById('playBtn');
+const music=document.getElementById('music');
+playBtn.onclick=()=>{music.play();playBtn.innerHTML='♫ Now Playing: Blessed';}
+
+function openEnvelope(){
+ document.getElementById('cards').style.display='block';
+ document.getElementById('cards').scrollIntoView({behavior:'smooth'});
+}
+
+let current=0;
+const slides=document.querySelectorAll('.card-slide');
+
+function update(){
+ slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+ document.getElementById('counter').innerText=(current+1)+' / '+slides.length;
+}
+
+function nextCard(){
+ if(current<slides.length-1){current++;update();}
+ else{
+   document.getElementById('starSection').style.display='block';
+   document.getElementById('starSection').scrollIntoView({behavior:'smooth'});
+   showFinal();
+ }
+}
+
+function prevCard(){ if(current>0){current--;update();}}
+
+function flower(){
+ const f=document.createElement('div');
+ f.className='flower';
+ f.innerHTML=Math.random()>.5?'🩵':'🤍';
+ f.style.left=Math.random()*100+'vw';
+ f.style.animationDuration=(5+Math.random()*5)+'s';
+ document.body.appendChild(f);
+ setTimeout(()=>f.remove(),10000);
+}
+setInterval(flower,500);
+
+for(let i=0;i<80;i++){
+ const s=document.createElement('div');
+ s.className='star';
+ s.style.left=Math.random()*100+'vw';
+ s.style.top=Math.random()*100+'vh';
+ s.style.animationDelay=Math.random()*2+'s';
+ document.body.appendChild(s);
+}
+
+const lines=[
+"happy 3rd mensive, bb.",
+"thank you for staying.",
+"thank you for loving me.",
+"thank you for being you.",
+"",
+"i love you.",
+"more than yesterday,",
+"less than tomorrow.",
+"",
+"— K ♡"
+];
+
+function showFinal(){
+ let i=0;
+ const el=document.getElementById('finalText');
+ const timer=setInterval(()=>{
+   if(i>=lines.length){clearInterval(timer);return;}
+   el.innerHTML += lines[i] + "<br>";
+   i++;
+ },1500);
+}
+</script>
+</body>
+</html>
